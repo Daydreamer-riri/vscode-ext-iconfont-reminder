@@ -4,22 +4,38 @@
   "description": "字体图标预览",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.57.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:iconfont-display.helloWorld"
+    "onCommand:iconfontDisplay.start"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "iconfont-display.helloWorld",
-        "title": "Hello World"
+        "command": "iconfontDisplay.start",
+        "title": "IconfontDisplay start"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "iconfont-display configuration",
+      "properties": {
+        "iconfontDisplay.mapFilePath": {
+          "scope": "resource",
+          "description": "File describing the iconfont mapping",
+          "type": "string"
+        },
+        "iconfontDisplay.svgPath": {
+          "scope": "resource",
+          "description": "Svg file",
+          "type": "string"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
@@ -33,19 +49,19 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
+    "@types/node": "~16.18.11",
+    "@types/vscode": "^1.74.0",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.28.0",
     "glob": "^8.0.3",
     "mocha": "^10.1.0",
-    "typescript": "^4.9.3",
     "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.0",
-    "@vscode/test-electron": "^2.2.0"
+    "webpack-cli": "^5.0.0"
   }
 }
