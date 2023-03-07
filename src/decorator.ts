@@ -1,12 +1,4 @@
-import {
-  window,
-  CancellationTokenSource,
-  TextEditor,
-  Range,
-  Position,
-  workspace,
-  Uri,
-} from 'vscode'
+import { window, TextEditor, Range, Position, workspace, Uri } from 'vscode'
 import type {
   TextDocument,
   TextEditorDecorationType,
@@ -19,25 +11,10 @@ import type { Config } from './config'
 
 const codeRE = /&#.*?;/gi
 
-interface Decoration {
-  textEditorDecorationType: TextEditorDecorationType
-  decorations: DecorationOptions[]
-}
-
-interface ScanResult {
-  decorations: Decoration[]
-  token: CancellationTokenSource
-}
-
-export function decorator(
-  context: ExtensionContext,
-  config: Config,
-  codeMap: Record<string, (color: string) => string>
-) {
-  const { mapFile, fontFamily } = config
+export function decorator(context: ExtensionContext, config: Config) {
+  const { mapFile, codeMap } = config
 
   let throttleIds: Record<string, NodeJS.Timeout> = {}
-  let scanResults: { [url: string]: ScanResult } = {}
 
   let throttledScan = (document: TextDocument, timeout: number = 0) => {
     if (document && document.uri) {
