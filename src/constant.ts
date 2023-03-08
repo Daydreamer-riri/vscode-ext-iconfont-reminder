@@ -1,5 +1,5 @@
 export const getPROP_NAME_RE = (compName: string) =>
-  new RegExp(`<${compName}[\\s\\n\\t][\\s\\S^>]*?name={?['"][\w-]*`)
+  new RegExp(`<${compName}[\\s\\n\\t][\\s\\S^>]*?name={?['"][\\w-]*$`)
 export const LANGUAGE_IDS = [
   'vue',
   'typescript',

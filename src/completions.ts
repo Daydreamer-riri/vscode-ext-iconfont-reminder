@@ -21,7 +21,7 @@ export function registerCompletions(context: ExtensionContext, config: Config) {
     provideCompletionItems(document, position) {
       const line = document.getText(
         new Range(
-          new Position(position.line, 0),
+          new Position(position.line - 5, 0),
           new Position(position.line, position.character)
         )
       )
