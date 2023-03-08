@@ -45,10 +45,9 @@ export function registerCompletions(context: ExtensionContext, config: Config) {
       const url = Uri.parse(
         `data:image/svg+xml;utf8,${svg(getSvgColor()).replace('#', '%23')}`
       )
-      const markdownString = new MarkdownString(`####    Icon: ${
-        completionItem.label
-      }
+      const markdownString = new MarkdownString(`####    Icon: ${name}
 <p align="center"><img height="64" src="${url.toString(true)}" ></p>
+<div></div>
 `)
 
       markdownString.supportHtml = true
