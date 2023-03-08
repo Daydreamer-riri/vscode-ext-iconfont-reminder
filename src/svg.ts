@@ -3,7 +3,7 @@ import { tryResolveFile } from './utils'
 
 function toSvg(path: string) {
   return (color: string) =>
-    `<svg viewBox='0 0 1035 1035' width='256' xmlns='http://www.w3.org/2000/svg' style='transform:rotateX(180deg) scale(.9);transform-origin:center;'><path fill='%23${color}' d='${path}'></path></svg>`
+    `<svg viewBox='0 0 1035 1035' width='256' xmlns='http://www.w3.org/2000/svg' style='transform:rotateX(180deg) scale(.9);transform-origin:center;'><path fill='#${color}' d='${path}'></path></svg>`
 }
 
 export function parseIconfont(svgPath: string) {

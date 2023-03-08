@@ -33,6 +33,12 @@
           "scope": "resource",
           "description": "Svg file",
           "type": "string"
+        },
+        "iconfontDisplay.componentName": {
+          "scope": "resource",
+          "description": "Component name",
+          "type": "string",
+          "default": "Icon"
         }
       }
     }

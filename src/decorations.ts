@@ -8,10 +8,9 @@ import type {
 } from 'vscode'
 import { findEditorsForDocument } from './utils'
 import type { Config } from './config'
+import { CODE_RE, DARK_COLOR, LIGHT_COLOR } from './constant'
 
-const codeRE = /&#.*?;/gi
-
-export function decorator(context: ExtensionContext, config: Config) {
+export function registerDecorations(context: ExtensionContext, config: Config) {
   const { mapFile, codeMap } = config
 
   let throttleIds: Record<string, NodeJS.Timeout> = {}
@@ -31,7 +30,7 @@ export function decorator(context: ExtensionContext, config: Config) {
     const text = editor.document.getText()
 
     let match
-    while ((match = codeRE.exec(text))) {
+    while ((match = CODE_RE.exec(text))) {
       const startPos = new Position(
         editor.document.positionAt(match.index).line,
         2
@@ -51,11 +50,15 @@ export function decorator(context: ExtensionContext, config: Config) {
       ]
       let decorationRenderOptions: DecorationRenderOptions = {
         light: {
-          gutterIconPath: Uri.parse(`data:image/svg+xml;utf8,${svg('657289')}`),
+          gutterIconPath: Uri.parse(
+            `data:image/svg+xml;utf8,${svg(LIGHT_COLOR).replace('#', '%23')}`
+          ),
           gutterIconSize: 'contain',
         },
         dark: {
-          gutterIconPath: Uri.parse(`data:image/svg+xml;utf8,${svg('9db1d5')}`),
+          gutterIconPath: Uri.parse(
+            `data:image/svg+xml;utf8,${svg(DARK_COLOR).replace('#', '%23')}`
+          ),
           gutterIconSize: 'contain',
         },
       }

@@ -1,6 +1,7 @@
 import { ExtensionContext, window, commands } from 'vscode'
-import { decorator } from './decorator'
-import { Config, resolveConfig } from './config'
+import { registerDecorations } from './decorations'
+import { registerCompletions } from './completions'
+import { type Config, resolveConfig } from './config'
 
 let config: Config | null = null
 
@@ -20,10 +21,8 @@ export function activate(context: ExtensionContext) {
 
   context.subscriptions.push(disposable)
 
-  // activeEditor是当前活跃（展示）的文档编辑器实例
-  let activeEditor = window.activeTextEditor
-
-  decorator(context, config)
+  registerDecorations(context, config)
+  registerCompletions(context, config)
 }
 
 export function deactivate() {

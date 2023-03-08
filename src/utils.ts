@@ -1,12 +1,6 @@
-import {
-  TextDocument,
-  window,
-  workspace,
-  type TextEditorDecorationType,
-  type TextEditor,
-} from 'vscode'
+import { TextDocument, window, workspace, type TextEditor } from 'vscode'
 import { join, resolve } from 'node:path'
-import { readFileSync } from 'node:fs'
+import { DARK_COLOR, LIGHT_COLOR } from './constant'
 
 export function formatIconCode(codeStr: string) {
   if (typeof codeStr != 'string') {
@@ -21,19 +15,6 @@ export function formatIconCode(codeStr: string) {
 export function findEditorsForDocument(document: TextDocument) {
   // return window.visibleTextEditors.filter(p => p.document.uri === document.uri)
   return [...window.visibleTextEditors]
-}
-
-export const clearEditorDecorations = (
-  document: TextDocument,
-  decorations: TextEditorDecorationType[]
-) => {
-  const editors: TextEditor[] = findEditorsForDocument(document)
-  if (editors) {
-    decorations.forEach(decoration => {
-      decoration.dispose()
-      editors.forEach(editor => editor.setDecorations(decoration, []))
-    })
-  }
 }
 
 export function resolveRoot() {
@@ -86,4 +67,10 @@ function isEditor(
   documentOrEditor: TextDocument | TextEditor
 ): documentOrEditor is TextEditor {
   return (documentOrEditor as any).document != null
+}
+
+export function getSvgColor() {
+  const { kind } = window.activeColorTheme
+  if (kind === 2 || kind === 3) return DARK_COLOR
+  else return LIGHT_COLOR
 }
