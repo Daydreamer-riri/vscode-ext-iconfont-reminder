@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:iconfontDisplay.start"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
