@@ -9,12 +9,13 @@ function toSvg(path: string) {
 export function parseIconfont(svgPath: string) {
   try {
     const resolvedSvgPath = tryResolveFile(svgPath)
-    if (!resolvedSvgPath) return {}
+    if (!resolvedSvgPath)
+      return {}
     const str = readFileSync(resolvedSvgPath, 'utf-8')
 
     // 构建单个 icon 的数据结构
-    const singleIconRegx =
-      /<glyph[\s\S]*?glyph-name=\"(.*?)\"[\s\S]*?unicode=\"(.*?)\"[\s\S]*?d=\"(.*?)\"[\s\S]*?\/>/g
+    const singleIconRegx
+      = /<glyph[\s\S]*?glyph-name=\"(.*?)\"[\s\S]*?unicode=\"(.*?)\"[\s\S]*?d=\"(.*?)\"[\s\S]*?\/>/g
     const codeMap: Record<string, (color: string) => string> = {}
 
     let match = singleIconRegx.exec(str)
@@ -25,7 +26,8 @@ export function parseIconfont(svgPath: string) {
     }
 
     return codeMap
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error)
     return {}
   }

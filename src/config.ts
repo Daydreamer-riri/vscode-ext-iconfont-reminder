@@ -1,7 +1,7 @@
+import * as fs from 'node:fs'
 import { window } from 'vscode'
 import { getConfiguredProperty, resolveRoot, tryResolveFile } from './utils'
 import { parseIconfont } from './svg'
-import * as fs from 'node:fs'
 
 type MapGraph = NonNullable<ReturnType<typeof createMapGraph>>
 
@@ -15,17 +15,20 @@ export interface Config {
 }
 
 export function resolveConfig() {
-  let activeEditor = window.activeTextEditor
+  const activeEditor = window.activeTextEditor
 
   const mapFilePath = getConfiguredProperty(activeEditor, 'mapFilePath', null)
   const svgPath = getConfiguredProperty(activeEditor, 'svgPath', null)
-  if (!mapFilePath || !svgPath) return null
+  if (!mapFilePath || !svgPath)
+    return null
 
   const mapFile = tryResolveFile(mapFilePath)
   const root = resolveRoot()
-  if (!mapFile || !root) return null
+  if (!mapFile || !root)
+    return null
   const mapGraph = createMapGraph(mapFile)
-  if (!mapGraph) return null
+  if (!mapGraph)
+    return null
 
   const codeMap = parseIconfont(svgPath)
   const compName = getConfiguredProperty(activeEditor, 'componentName', 'Icon')
@@ -40,11 +43,13 @@ export function resolveConfig() {
 }
 
 function createMapGraph(mapFile: string) {
-  if (!mapFile.endsWith('.json')) return null
-  if (!fs.existsSync(mapFile)) return null
+  if (!mapFile.endsWith('.json'))
+    return null
+  if (!fs.existsSync(mapFile))
+    return null
 
   const originMap: Record<string, string> = JSON.parse(
-    fs.readFileSync(mapFile, 'utf-8')
+    fs.readFileSync(mapFile, 'utf-8'),
   )
   const entries = Object.entries(originMap)
   const names = Object.keys(originMap)

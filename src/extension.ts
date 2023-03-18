@@ -1,4 +1,4 @@
-import { ExtensionContext, window, commands } from 'vscode'
+import type { ExtensionContext } from 'vscode'
 import { registerDecorations } from './decorations'
 import { registerCompletions } from './completions'
 import { registerHover } from './hover'
@@ -8,7 +8,8 @@ let config: Config | null = null
 
 export function activate(context: ExtensionContext) {
   config = resolveConfig()
-  if (config == null) return
+  if (config == null)
+    return
 
   registerDecorations(context, config)
   registerCompletions(context, config)

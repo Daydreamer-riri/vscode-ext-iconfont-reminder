@@ -1,10 +1,11 @@
-import { window, TextEditor, Range, Position, workspace, Uri } from 'vscode'
+import { Position, Range, Uri, window, workspace } from 'vscode'
 import type {
-  TextDocument,
-  TextEditorDecorationType,
   DecorationOptions,
-  ExtensionContext,
   DecorationRenderOptions,
+  ExtensionContext,
+  TextDocument,
+  TextEditor,
+  TextEditorDecorationType,
 } from 'vscode'
 import { findEditorsForDocument } from './utils'
 import type { Config } from './config'
@@ -13,12 +14,13 @@ import { CODE_RE, DARK_COLOR, LIGHT_COLOR } from './constant'
 export function registerDecorations(context: ExtensionContext, config: Config) {
   const { mapFile, codeMap } = config
 
-  let throttleIds: Record<string, NodeJS.Timeout> = {}
+  const throttleIds: Record<string, NodeJS.Timeout> = {}
 
-  let throttledScan = (document: TextDocument, timeout: number = 0) => {
+  const throttledScan = (document: TextDocument, timeout = 0) => {
     if (document && document.uri) {
       const lookupKey = document.uri.toString()
-      if (throttleIds[lookupKey]) clearTimeout(throttleIds[lookupKey])
+      if (throttleIds[lookupKey])
+        clearTimeout(throttleIds[lookupKey])
       throttleIds[lookupKey] = setTimeout(() => {
         scan(document)
         delete throttleIds[lookupKey]
@@ -33,14 +35,15 @@ export function registerDecorations(context: ExtensionContext, config: Config) {
     while ((match = CODE_RE.exec(text))) {
       const startPos = new Position(
         editor.document.positionAt(match.index).line,
-        2
+        2,
       ) // 开始位置
       const endPos = editor.document.positionAt(
-        match.index + match[0].length + 1
+        match.index + match[0].length + 1,
       ) // 结束位置
 
       const svg = codeMap[match[0]]
-      if (!svg) continue
+      if (!svg)
+        continue
 
       const decorations: DecorationOptions[] = [
         {
@@ -48,22 +51,22 @@ export function registerDecorations(context: ExtensionContext, config: Config) {
           hoverMessage: '',
         },
       ]
-      let decorationRenderOptions: DecorationRenderOptions = {
+      const decorationRenderOptions: DecorationRenderOptions = {
         light: {
           gutterIconPath: Uri.parse(
-            `data:image/svg+xml;utf8,${svg(LIGHT_COLOR).replace('#', '%23')}`
+            `data:image/svg+xml;utf8,${svg(LIGHT_COLOR).replace('#', '%23')}`,
           ),
           gutterIconSize: 'contain',
         },
         dark: {
           gutterIconPath: Uri.parse(
-            `data:image/svg+xml;utf8,${svg(DARK_COLOR).replace('#', '%23')}`
+            `data:image/svg+xml;utf8,${svg(DARK_COLOR).replace('#', '%23')}`,
           ),
           gutterIconSize: 'contain',
         },
       }
-      let textEditorDecorationType: TextEditorDecorationType =
-        window.createTextEditorDecorationType(<any>decorationRenderOptions)
+      const textEditorDecorationType: TextEditorDecorationType
+        = window.createTextEditorDecorationType(<any>decorationRenderOptions)
       editor.setDecorations(textEditorDecorationType, decorations)
     }
   }
@@ -75,49 +78,48 @@ export function registerDecorations(context: ExtensionContext, config: Config) {
       .forEach(doc => throttledScan(doc))
   }
 
-  const scan = (document: TextDocument) => {
-    if (document.fileName !== mapFile) return
+  function scan(document: TextDocument) {
+    if (document.fileName !== mapFile)
+      return
     const editors = findEditorsForDocument(document)
-    if (editors.length === 0) return
+    if (editors.length === 0)
+      return
 
-    editors.forEach(editor => {
+    editors.forEach((editor) => {
       decorate(editor)
     })
   }
 
   context.subscriptions.push(
-    workspace.onDidChangeTextDocument(e => {
-      if (e) {
+    workspace.onDidChangeTextDocument((e) => {
+      if (e)
         throttledScan(e.document)
-      }
-    })
+    }),
   )
   context.subscriptions.push(
-    window.onDidChangeActiveTextEditor(e => {
-      if (e) {
+    window.onDidChangeActiveTextEditor((e) => {
+      if (e)
         throttledScan(e.document)
-      }
-    })
+    }),
   )
   context.subscriptions.push(
-    window.onDidChangeTextEditorVisibleRanges(event => {
+    window.onDidChangeTextEditorVisibleRanges((event) => {
       if (event && event.textEditor && event.textEditor.document) {
         const document = event.textEditor.document
         throttledScan(document, 50)
       }
-    })
+    }),
   )
   context.subscriptions.push(
     workspace.onDidChangeWorkspaceFolders(() => {
       refreshAllVisibleEditors()
-    })
+    }),
   )
   context.subscriptions.push(
-    workspace.onDidOpenTextDocument(e => {
-      if (e) {
+    workspace.onDidOpenTextDocument((e) => {
+      if (e)
         throttledScan(e)
-      }
-    })
+    }),
   )
 
   refreshAllVisibleEditors()
