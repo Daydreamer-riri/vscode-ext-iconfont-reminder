@@ -1,34 +1,34 @@
 {
-  "name": "vscode-ext-iconfont-display",
-  "displayName": "iconfont-display",
-  "description": "字体图标预览",
+  "name": "vscode-ext-iconfont-reminder",
+  "displayName": "iconfont-reminder",
   "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.57.0"
-  },
+  "description": "字体图标预览",
   "categories": [
     "Other"
   ],
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.57.0"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
-  "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "iconfont-display configuration",
+      "title": "iconfont-reminder configuration",
       "properties": {
-        "iconfontDisplay.mapFilePath": {
+        "iconfontReminder.mapFilePath": {
           "scope": "resource",
           "description": "File describing the iconfont mapping",
           "type": "string"
         },
-        "iconfontDisplay.svgPath": {
+        "iconfontReminder.svgPath": {
           "scope": "resource",
           "description": "Svg file",
           "type": "string"
         },
-        "iconfontDisplay.componentName": {
+        "iconfontReminder.componentName": {
           "scope": "resource",
           "description": "Component name",
           "type": "string",

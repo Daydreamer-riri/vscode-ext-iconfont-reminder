@@ -51,7 +51,7 @@ export function getConfiguredProperty<T>(
       ? documentOrEditor.document
       : documentOrEditor
   const config = workspace.getConfiguration(
-    'iconfontDisplay',
+    'iconfontReminder',
     document ? document.uri : undefined,
   )
   return config.get(property.toLowerCase(), config.get(property, fallback))
