@@ -1,14 +1,26 @@
 {
+  "publisher": "ririd",
   "name": "vscode-ext-iconfont-reminder",
   "displayName": "iconfont-reminder",
   "version": "0.0.1",
   "description": "字体图标预览",
+  "homepage": "https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder",
+  "repository": {
+    "type": "git",
+    "directory": "https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder"
+  },
+  "keywords": [
+    "icons",
+    "iconfont"
+  ],
   "categories": [
-    "Other"
+    "Other",
+    "Visualization",
+    "Snippets"
   ],
   "main": "./dist/extension.js",
   "engines": {
-    "vscode": "^1.57.0"
+    "vscode": "^1.47.0"
   },
   "activationEvents": [
     "onStartupFinished"
