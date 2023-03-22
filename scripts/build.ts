@@ -19,7 +19,7 @@ async function build() {
   const json = await fs.readJSON('./package.json')
   delete json.scripts
   delete json.devDependencies
-  json.main = 'index.js'
+  json.main = 'extension.js'
   await fs.writeJSON('./dist/package.json', json)
 }
 
