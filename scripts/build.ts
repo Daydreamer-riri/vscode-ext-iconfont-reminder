@@ -6,7 +6,7 @@ async function build() {
   execSync('tsup src/extension.ts --format cjs --external vscode --no-shims', { stdio: 'inherit' })
 
   const files = [
-    // 'LICENSE',
+    'LICENSE',
     'README.md',
     // 'snippets',
     '.vscodeignore',
