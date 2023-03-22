@@ -3,7 +3,7 @@ import * as fs from 'fs-extra'
 
 async function build() {
   await fs.remove('./dist')
-  execSync('tsup src/index.ts --format cjs --external vscode --no-shims', { stdio: 'inherit' })
+  execSync('tsup src/extension.ts --format cjs --external vscode --no-shims', { stdio: 'inherit' })
 
   const files = [
     // 'LICENSE',
