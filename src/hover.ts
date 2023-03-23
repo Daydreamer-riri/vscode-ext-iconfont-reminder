@@ -1,16 +1,18 @@
 import type { ExtensionContext, HoverProvider } from 'vscode'
 import { Hover, MarkdownString, Position, Range, Uri, languages } from 'vscode'
-import type { Config } from './config'
+import { configRef } from './config'
 import { LANGUAGE_IDS, getPROP_NAME_RE } from './constant'
 import { getSvgColor } from './utils'
 
-export function registerHover(context: ExtensionContext, config: Config) {
-  const { mapGraph, codeMap, compName } = config
-  const PROP_NAME_RE = getPROP_NAME_RE(compName)
-  const { names } = mapGraph
+export function registerHover(context: ExtensionContext) {
+  // const { mapGraph, codeMap, compName } = config
+  const PROP_NAME_RE = getPROP_NAME_RE(configRef.value!.compName)
+  // const { names } = mapGraph
 
   const hoverProvider: HoverProvider = {
     provideHover(document, position) {
+      const config = configRef.value!
+
       const line = document.getText(
         new Range(
           new Position(position.line - 5, 0),
@@ -22,13 +24,13 @@ export function registerHover(context: ExtensionContext, config: Config) {
         return null
 
       const word = document.getText(document.getWordRangeAtPosition(position))
-      if (!names.includes(word))
+      if (!config.mapGraph.names.includes(word))
         return null
 
-      const code = mapGraph.getCodeByName(word)
+      const code = config.mapGraph.getCodeByName(word)
       if (!code)
         return null
-      const svg = codeMap[code]
+      const svg = config.codeMap[code]
       const url = Uri.parse(
         `data:image/svg+xml;utf8,${svg(getSvgColor()).replace('#', '%23')}`,
       )

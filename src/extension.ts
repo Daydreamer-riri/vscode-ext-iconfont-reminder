@@ -7,12 +7,12 @@ import { type Config, resolveConfig } from './config'
 let config: Config | null = null
 
 export async function activate(context: ExtensionContext) {
-  config = await resolveConfig()
+  config = await resolveConfig(context)
   if (config == null)
     return
-  registerDecorations(context, config)
-  registerCompletions(context, config)
-  registerHover(context, config)
+  registerDecorations(context)
+  registerCompletions(context)
+  registerHover(context)
 }
 
 export function deactivate() {

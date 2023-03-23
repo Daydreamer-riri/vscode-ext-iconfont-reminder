@@ -8,11 +8,12 @@ import type {
   TextEditorDecorationType,
 } from 'vscode'
 import { findEditorsForDocument } from './utils'
-import type { Config } from './config'
+import { configRef } from './config'
 import { CODE_RE, DARK_COLOR, LIGHT_COLOR } from './constant'
 
-export function registerDecorations(context: ExtensionContext, config: Config) {
-  const { mapFile, codeMap } = config
+export function registerDecorations(context: ExtensionContext) {
+  // const { mapFile, codeMap } = config
+  const disposes: (() => void)[] = []
 
   const throttleIds: Record<string, NodeJS.Timeout> = {}
 
@@ -29,6 +30,8 @@ export function registerDecorations(context: ExtensionContext, config: Config) {
   }
 
   const decorate = (editor: TextEditor) => {
+    const config = configRef.value!
+
     const text = editor.document.getText()
 
     let match
@@ -41,7 +44,7 @@ export function registerDecorations(context: ExtensionContext, config: Config) {
         match.index + match[0].length + 1,
       ) // 结束位置
 
-      const svg = codeMap[match[0]]
+      const svg = config.codeMap[match[0]]
       if (!svg)
         continue
 
@@ -79,7 +82,9 @@ export function registerDecorations(context: ExtensionContext, config: Config) {
   }
 
   function scan(document: TextDocument) {
-    if (document.fileName !== mapFile)
+    const config = configRef.value!
+
+    if (document.fileName !== config.mapFile)
       return
     const editors = findEditorsForDocument(document)
     if (editors.length === 0)

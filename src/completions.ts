@@ -9,13 +9,13 @@ import {
 } from 'vscode'
 import type { CompletionItemProvider, ExtensionContext } from 'vscode'
 import { LANGUAGE_IDS, getPROP_NAME_RE } from './constant'
-import type { Config } from './config'
+import { configRef } from './config'
 import { getSvgColor } from './utils'
 
-export function registerCompletions(context: ExtensionContext, config: Config) {
-  const { mapGraph, codeMap, compName } = config
-  const { names } = mapGraph
-  const PROP_NAME_RE = getPROP_NAME_RE(compName)
+export function registerCompletions(context: ExtensionContext) {
+  const config = configRef.value!
+  // const { mapGraph, codeMap, compName } = config
+  const PROP_NAME_RE = getPROP_NAME_RE(config.compName)
 
   const iconProvider: CompletionItemProvider = {
     provideCompletionItems(document, position) {
@@ -29,6 +29,8 @@ export function registerCompletions(context: ExtensionContext, config: Config) {
       if (!PROP_NAME_RE.test(line))
         return null
 
+      const { names } = config.mapGraph
+
       const completionItems: CompletionItem[] = names.map((icon: string) => {
         return new CompletionItem(icon, CompletionItemKind.Field)
       })
@@ -38,10 +40,10 @@ export function registerCompletions(context: ExtensionContext, config: Config) {
 
     resolveCompletionItem(completionItem) {
       const name = completionItem.label as string
-      const code = mapGraph.getCodeByName(name)
+      const code = config.mapGraph.getCodeByName(name)
       if (!code)
         return completionItem
-      const svg = codeMap[code]
+      const svg = config.codeMap[code]
       const url = Uri.parse(
         `data:image/svg+xml;utf8,${svg(getSvgColor()).replace('#', '%23')}`,
       )

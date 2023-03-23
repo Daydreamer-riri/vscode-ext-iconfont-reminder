@@ -1,5 +1,6 @@
 import * as fs from 'node:fs'
-import { window } from 'vscode'
+import type { ExtensionContext } from 'vscode'
+import { window, workspace } from 'vscode'
 import jiti from 'jiti'
 import { getConfiguredProperty, resolveRoot, tryResolveFile } from './utils'
 import { parseIconfont } from './svg'
@@ -16,8 +17,9 @@ export interface Config {
   mapGraph: MapGraph
   compName: string
 }
+export const configRef: { value: Config | null } = { value: null }
 
-export async function resolveConfig() {
+export async function resolveConfig(context: ExtensionContext) {
   const activeEditor = window.activeTextEditor
 
   const mapFilePath = getConfiguredProperty(activeEditor, 'mapFilePath', null)
@@ -35,7 +37,7 @@ export async function resolveConfig() {
 
   const codeMap = parseIconfont(svgPath)
   const compName = getConfiguredProperty(activeEditor, 'componentName', 'Icon')
-  return {
+  configRef.value = {
     codeMap,
     svgPath,
     root,
@@ -43,6 +45,15 @@ export async function resolveConfig() {
     mapGraph,
     compName,
   } as Config
+
+  context.subscriptions.push(
+    workspace.onDidSaveTextDocument((e) => {
+      console.log('e.fileName', e.fileName)
+      console.log('mapFile', mapFile)
+    }),
+  )
+
+  return configRef.value
 }
 
 async function createMapGraph(mapFile: string) {
