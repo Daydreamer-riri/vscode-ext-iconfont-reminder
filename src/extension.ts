@@ -2,6 +2,7 @@ import type { ExtensionContext } from 'vscode'
 import { registerDecorations } from './decorations'
 import { registerCompletions } from './completions'
 import { registerHover } from './hover'
+import { registerCommands } from './commands'
 import { type Config, resolveConfig } from './config'
 
 let config: Config | null = null
@@ -13,6 +14,7 @@ export async function activate(context: ExtensionContext) {
   registerDecorations(context)
   registerCompletions(context)
   registerHover(context)
+  registerCommands(context)
 }
 
 export function deactivate() {
