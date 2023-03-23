@@ -1,16 +1,14 @@
 import {
   CompletionItem,
   CompletionItemKind,
-  MarkdownString,
   Position,
   Range,
-  Uri,
   languages,
 } from 'vscode'
 import type { CompletionItemProvider, ExtensionContext } from 'vscode'
 import { LANGUAGE_IDS, getPROP_NAME_RE } from './constant'
 import { configRef } from './config'
-import { getSvgColor } from './utils'
+import { getIconMarkDown } from './markdown'
 
 export function registerCompletions(context: ExtensionContext) {
   const config = configRef.value!
@@ -40,28 +38,18 @@ export function registerCompletions(context: ExtensionContext) {
 
     resolveCompletionItem(completionItem) {
       const name = completionItem.label as string
-      const code = config.mapGraph.getCodeByName(name)
-      if (!code)
-        return completionItem
-      const svg = config.codeMap[code]
-      const url = Uri.parse(
-        `data:image/svg+xml;utf8,${svg(getSvgColor()).replace('#', '%23')}`,
-      )
-      const markdownString = new MarkdownString(`####    Icon: ${name}
-<p align="center"><img height="64" src="${url.toString(true)}" ></p>
-<div></div>
-`)
-
-      markdownString.supportHtml = true
-
       return {
         ...completionItem,
-        documentation: markdownString,
+        documentation: getIconMarkDown(name),
       }
     },
   }
 
   context.subscriptions.push(
-    languages.registerCompletionItemProvider(LANGUAGE_IDS, iconProvider),
+    languages.registerCompletionItemProvider(
+      LANGUAGE_IDS,
+      iconProvider,
+      '"', '\'',
+    ),
   )
 }
