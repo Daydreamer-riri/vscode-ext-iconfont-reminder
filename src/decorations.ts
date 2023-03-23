@@ -70,6 +70,7 @@ export function registerDecorations(context: ExtensionContext) {
       }
       const textEditorDecorationType: TextEditorDecorationType
         = window.createTextEditorDecorationType(<any>decorationRenderOptions)
+      disposes.push(textEditorDecorationType.dispose)
       editor.setDecorations(textEditorDecorationType, decorations)
     }
   }
@@ -89,6 +90,9 @@ export function registerDecorations(context: ExtensionContext) {
     const editors = findEditorsForDocument(document)
     if (editors.length === 0)
       return
+
+    disposes.forEach(d => d())
+    disposes.length = 0
 
     editors.forEach((editor) => {
       decorate(editor)
