@@ -16,10 +16,12 @@ export interface Config {
   codeMap: ReturnType<typeof parseIconfont>
   mapGraph: MapGraph
   compName: string
+  resetMapGraph(): Promise<void>
+  resetCodeMap(): void
 }
 export const configRef: { value: Config | null } = { value: null }
 
-export async function resolveConfig(context: ExtensionContext) {
+export async function resolveConfig(context: ExtensionContext): Promise<Config | null> {
   const activeEditor = window.activeTextEditor
 
   const mapFilePath = getConfiguredProperty(activeEditor, 'mapFilePath', null)
@@ -28,14 +30,15 @@ export async function resolveConfig(context: ExtensionContext) {
     return null
 
   const mapFile = tryResolveFile(mapFilePath)
+  const svgFile = tryResolveFile(svgPath)
   const root = resolveRoot()
-  if (!mapFile || !root)
+  if (!mapFile || !root || !svgFile)
     return null
   const mapGraph = await createMapGraph(mapFile)
   if (!mapGraph)
     return null
 
-  const codeMap = parseIconfont(svgPath)
+  const codeMap = parseIconfont(svgFile)
   const compName = getConfiguredProperty(activeEditor, 'componentName', 'Icon')
   configRef.value = {
     codeMap,
@@ -44,12 +47,29 @@ export async function resolveConfig(context: ExtensionContext) {
     mapFile,
     mapGraph,
     compName,
-  } as Config
+    async resetMapGraph() {
+      configRef.value!.mapGraph = (await createMapGraph(mapFile)) ?? configRef.value!.mapGraph
+    },
+    resetCodeMap() {
+      configRef.value!.codeMap = parseIconfont(svgPath)
+    },
+  }
 
   context.subscriptions.push(
-    workspace.onDidSaveTextDocument((e) => {
-      console.log('e.fileName', e.fileName)
-      console.log('mapFile', mapFile)
+    workspace.onDidSaveTextDocument(async (e) => {
+      if (e.fileName === mapFile)
+        configRef.value?.resetMapGraph()
+      if (e.fileName === svgFile)
+        configRef.value?.resetCodeMap()
+    }),
+  )
+
+  context.subscriptions.push(
+    workspace.onDidCreateFiles((e) => {
+      if (
+        e.files.some(({ fsPath }) => fsPath === svgPath,
+        ))
+        configRef.value?.resetCodeMap()
     }),
   )
 
