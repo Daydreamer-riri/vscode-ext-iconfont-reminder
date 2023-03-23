@@ -6,11 +6,10 @@ import { type Config, resolveConfig } from './config'
 
 let config: Config | null = null
 
-export function activate(context: ExtensionContext) {
-  config = resolveConfig()
+export async function activate(context: ExtensionContext) {
+  config = await resolveConfig()
   if (config == null)
     return
-
   registerDecorations(context, config)
   registerCompletions(context, config)
   registerHover(context, config)

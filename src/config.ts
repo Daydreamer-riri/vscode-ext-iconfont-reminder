@@ -1,9 +1,12 @@
 import * as fs from 'node:fs'
 import { window } from 'vscode'
+import jiti from 'jiti'
 import { getConfiguredProperty, resolveRoot, tryResolveFile } from './utils'
 import { parseIconfont } from './svg'
 
-type MapGraph = NonNullable<ReturnType<typeof createMapGraph>>
+type UnPromisify<T> = T extends Promise<infer U> ? U : never
+
+type MapGraph = NonNullable<UnPromisify<ReturnType<typeof createMapGraph>>>
 
 export interface Config {
   mapFile: string
@@ -14,7 +17,7 @@ export interface Config {
   compName: string
 }
 
-export function resolveConfig() {
+export async function resolveConfig() {
   const activeEditor = window.activeTextEditor
 
   const mapFilePath = getConfiguredProperty(activeEditor, 'mapFilePath', null)
@@ -26,7 +29,7 @@ export function resolveConfig() {
   const root = resolveRoot()
   if (!mapFile || !root)
     return null
-  const mapGraph = createMapGraph(mapFile)
+  const mapGraph = await createMapGraph(mapFile)
   if (!mapGraph)
     return null
 
@@ -42,15 +45,19 @@ export function resolveConfig() {
   } as Config
 }
 
-function createMapGraph(mapFile: string) {
-  if (!mapFile.endsWith('.json'))
-    return null
+async function createMapGraph(mapFile: string) {
+  // if (!mapFile.endsWith('.json'))
+  //   return null
   if (!fs.existsSync(mapFile))
     return null
 
-  const originMap: Record<string, string> = JSON.parse(
-    fs.readFileSync(mapFile, 'utf-8'),
-  )
+  const originMap: Record<string, string> = await jiti(mapFile, {
+    interopDefault: true,
+    cache: false,
+    requireCache: false,
+    v8cache: false,
+    esmResolve: true,
+  })(mapFile)
   const entries = Object.entries(originMap)
   const names = Object.keys(originMap)
   const codes = Object.values(originMap)

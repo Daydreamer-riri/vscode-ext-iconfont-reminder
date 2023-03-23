@@ -15,9 +15,13 @@ specifiers:
   esno: ^0.16.3
   fs-extra: ^11.1.1
   glob: ^8.1.0
+  jiti: ^1.18.2
   mocha: ^10.2.0
   tsup: ^6.7.0
   typescript: ^4.9.5
+
+dependencies:
+  jiti: 1.18.2
 
 devDependencies:
   '@ririd/eslint-config': 0.2.1_vgl77cfdswitgr47lm5swmv43m
@@ -2318,6 +2322,11 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
+
+  /jiti/1.18.2:
+    resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
+    hasBin: true
+    dev: false
 
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}

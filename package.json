@@ -57,8 +57,11 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "release": "bumpp --tag --push --commit",
-    "dev": "pnpm build -- --watch",
+    "dev": "pnpm build --watch",
     "build": "esno scripts/build.ts"
+  },
+  "dependencies": {
+    "jiti": "^1.18.2"
   },
   "devDependencies": {
     "@ririd/eslint-config": "^0.2.1",
