@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs'
 
-function toSvg(path: string) {
+function toSvg(path: string, fontSize: number) {
   return (color: string) =>
-    `<svg viewBox='0 0 1035 1035' width='256' xmlns='http://www.w3.org/2000/svg' style='transform:rotateX(180deg) scale(.9);transform-origin:center;'><path fill='#${color}' d='${path}'></path></svg>`
+    `<svg viewBox='0 0 1035 1035' width='${fontSize}px' height='${fontSize}px' xmlns='http://www.w3.org/2000/svg' style='transform:rotateX(180deg) scale(.9);transform-origin:center;'><path fill='#${color}' d='${path}'></path></svg>`
 }
 
-export function parseIconfont(resolvedSvgPath: string) {
+export function parseIconfont(resolvedSvgPath: string, fontSize: number) {
   try {
     if (!resolvedSvgPath)
       return {}
@@ -19,7 +19,7 @@ export function parseIconfont(resolvedSvgPath: string) {
     let match = singleIconRegx.exec(str)
     while (match) {
       const [, , code, path] = match
-      codeMap[code] = toSvg(path)
+      codeMap[code] = toSvg(path, fontSize)
       match = singleIconRegx.exec(str)
     }
 

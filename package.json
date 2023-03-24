@@ -30,9 +30,19 @@
   "contributes": {
     "commands": [
       {
+        "command": "iconfont-reminder.toggle-annotations",
+        "category": "iconfont-reminder",
+        "title": "Toggle Annotations"
+      },
+      {
         "command": "iconfont-reminder.reload",
         "category": "iconfont-reminder",
         "title": "Reload"
+      },
+      {
+        "command": "iconfont-reminder.toggle-inplace",
+        "category": "iconfont-reminder",
+        "title": "Toggle In-place Mode"
       }
     ],
     "configuration": {
@@ -40,20 +50,27 @@
       "title": "iconfont-reminder configuration",
       "properties": {
         "iconfontReminder.mapFilePath": {
-          "scope": "resource",
           "description": "File describing the iconfont mapping",
           "type": "string"
         },
         "iconfontReminder.svgPath": {
-          "scope": "resource",
           "description": "Svg file",
           "type": "string"
         },
         "iconfontReminder.componentName": {
-          "scope": "resource",
           "description": "Component name",
           "type": "string",
           "default": "Icon"
+        },
+        "iconfontReminder.inplace": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use icon graph to replace the icon name."
+        },
+        "iconfontReminder.annotations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enabled Iconify inline annotations"
         }
       }
     }

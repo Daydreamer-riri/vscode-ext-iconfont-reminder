@@ -11,6 +11,9 @@ type MapGraph = NonNullable<UnPromisify<ReturnType<typeof createMapGraph>>>
 
 export interface Config {
   mapFile: string
+  annotations: boolean
+  inplace: boolean
+  fontSize: number
   root: string
   svgPath: string
   codeMap: ReturnType<typeof parseIconfont>
@@ -18,8 +21,21 @@ export interface Config {
   compName: string
   resetMapGraph(): Promise<void>
   resetCodeMap(): void
+  setConfig(key: string, value: any): void
 }
 export const configRef: { value: Config | null } = { value: null }
+
+function getConfig<T = any>(key: string): T | undefined {
+  return workspace
+    .getConfiguration()
+    .get<T>(key)
+}
+
+async function setConfig(key: string, value: any) {
+  return await workspace
+    .getConfiguration()
+    .update(`iconfontReminder.${key}`, value, false)
+}
 
 export async function resolveConfig(context: ExtensionContext): Promise<Config | null> {
   const activeEditor = window.activeTextEditor
@@ -38,9 +54,13 @@ export async function resolveConfig(context: ExtensionContext): Promise<Config |
   if (!mapGraph)
     return null
 
-  const codeMap = parseIconfont(svgFile)
+  const fontSize = getConfig('editor.fontSize') ?? 12
+  const codeMap = parseIconfont(svgFile, fontSize)
   const compName = getConfiguredProperty(activeEditor, 'componentName', 'Icon')
   configRef.value = {
+    annotations: getConfiguredProperty(undefined, 'annotations', true),
+    inplace: getConfiguredProperty(undefined, 'inplace', true),
+    fontSize,
     codeMap,
     svgPath,
     root,
@@ -51,8 +71,9 @@ export async function resolveConfig(context: ExtensionContext): Promise<Config |
       configRef.value!.mapGraph = (await createMapGraph(mapFile)) ?? configRef.value!.mapGraph
     },
     resetCodeMap() {
-      configRef.value!.codeMap = parseIconfont(svgPath)
+      configRef.value!.codeMap = parseIconfont(svgPath, fontSize)
     },
+    setConfig,
   }
 
   context.subscriptions.push(
@@ -107,4 +128,9 @@ async function createMapGraph(mapFile: string) {
   const mapGraph = { originMap, getCodeByName, getNameByCode, names, codes }
 
   return mapGraph
+}
+
+export function getNAME_RE() {
+  const names = configRef.value?.mapGraph.names ?? []
+  return new RegExp(`[^\\w\\d]((?:${names.join('|')}))`, 'g')
 }

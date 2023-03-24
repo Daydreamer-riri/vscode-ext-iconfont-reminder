@@ -80,3 +80,5 @@ export function getSvgColor() {
     return DARK_COLOR
   else return LIGHT_COLOR
 }
+
+export const isTruthy = <T>(a: T | undefined): a is T => Boolean(a)
