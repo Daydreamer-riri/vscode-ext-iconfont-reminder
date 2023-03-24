@@ -13,7 +13,7 @@ export function getIconMarkDown(name: string) {
   )
   const icon = `<img height="64" src="${url.toString(true)}" >`
   const markdownString = new MarkdownString(
-    `<h4 align="center">${name}</h4><p align="center">${icon}</p> \n <p align="center"><code>${name}: ${code.slice(3, code.length - 1)}</code></p> \n`,
+    `<p align="center">${icon}</p> \n <p align="center"><code>${name}: ${code.slice(3, code.length - 1)}</code></p> \n`,
   )
 
   markdownString.supportHtml = true

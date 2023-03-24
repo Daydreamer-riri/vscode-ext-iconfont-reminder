@@ -31,7 +31,9 @@ export function registerCompletions(context: ExtensionContext) {
       const { names } = config.mapGraph
 
       const completionItems: CompletionItem[] = names.map((icon: string) => {
-        return new CompletionItem(icon, CompletionItemKind.Color)
+        const item = new CompletionItem(icon, CompletionItemKind.Color)
+        item.detail = icon
+        return item
       })
 
       return completionItems
