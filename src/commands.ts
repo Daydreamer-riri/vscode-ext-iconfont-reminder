@@ -20,7 +20,7 @@ export function registerCommands(ctx: ExtensionContext) {
   // )
 
   ctx.subscriptions.push(
-    commands.registerCommand('iconfont-reminder.clear-cache', () => {
+    commands.registerCommand('iconfont-reminder.reload', () => {
       configRef.value?.resetCodeMap()
       configRef.value?.resetMapGraph()
     }),

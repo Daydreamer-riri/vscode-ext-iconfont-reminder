@@ -28,6 +28,13 @@
     "onStartupFinished"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "iconfont-reminder.reload",
+        "category": "iconfont-reminder",
+        "title": "Reload"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "iconfont-reminder configuration",
