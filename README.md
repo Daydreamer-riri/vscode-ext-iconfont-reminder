@@ -1,4 +1,4 @@
-<h1 align="center">Icon reminder <sup>VS Code</sup></h1>
+<h1 align="center">Iconfont reminder <sup>VS Code</sup></h1>
 
 <p align="center">
 The preview of the iconfont icon component for VS Code.<br>
