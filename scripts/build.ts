@@ -10,7 +10,7 @@ async function build() {
     'README.md',
     // 'snippets',
     '.vscodeignore',
-    // 'res',
+    'res',
   ]
 
   for (const f of files)
