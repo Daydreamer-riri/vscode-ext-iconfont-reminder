@@ -14,27 +14,45 @@ The preview of the iconfont icon component for VS Code.<br>
 
 ### Example 
 ```json
+// .vscode/settings.json
 {
-  "iconfontReminder.mapFilePath": "../map.json",
+  "iconfontReminder.mapFilePath": "../map.ts",
   "iconfontReminder.svgPath": "../fonts/crn_font_custom_ctrip.svg"
 }
 ```
 
 ### SvgRule
 
-The format of the svg file is shown in the figure: 
-![svg-rule](https://user-images.githubusercontent.com/70067449/225298340-91ed1869-74f2-45b5-9006-8d1a66bae96d.png)
+```svg
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <font id="crn_font_custom_ctrip" horiz-adv-x="1024">
+      <font-face
+        ...
+      />
+      <missing-glyph horiz-adv-x="0"/>
+        <glyph
+          unicode="&#xe945;"
+          d=" ..." />
+        <glyph
+          unicode="&#xe946;"
+          d=" ..." />
+        <glyph
+          unicode="&#xebb9;"
+          d=" ..." />
+  ...
+```
 
 ## Preview
 
-map file
+<p align="center">
+  <img src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/preview.png?raw=true" alt="preview">
+</p>
 
-![map-file](https://user-images.githubusercontent.com/70067449/225298794-cea04b63-790c-47e2-bae5-998d43aba511.png)
+- map file
 
-reminder
+![map-file](https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/mapfile.png?raw=true)
 
-![reminder](https://user-images.githubusercontent.com/70067449/225299355-59e5d5af-2ea5-410e-8edb-2b99e5d0bb21.png)
-
-hover
+- hover
 
 ![hover](https://user-images.githubusercontent.com/70067449/225299495-4386c5fe-fc46-49d0-88dd-4749213120d5.png)
