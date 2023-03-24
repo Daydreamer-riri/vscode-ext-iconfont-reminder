@@ -1,13 +1,13 @@
 import type { ExtensionContext, HoverProvider } from 'vscode'
 import { Hover, MarkdownString, Position, Range, Uri, languages } from 'vscode'
 import { configRef } from './config'
-import { LANGUAGE_IDS, getPROP_NAME_RE } from './constant'
+import { LANGUAGE_IDS, getPROP_NAME_RE, getPROP_NAME_TERNARY_RE } from './constant'
 import { getSvgColor } from './utils'
 
 export function registerHover(context: ExtensionContext) {
-  // const { mapGraph, codeMap, compName } = config
-  const PROP_NAME_RE = getPROP_NAME_RE(configRef.value!.compName)
-  // const { names } = mapGraph
+  const config = configRef.value!
+  const PROP_NAME_RE = getPROP_NAME_RE(config.compName)
+  const PROP_NAME_TERNARY_RE = getPROP_NAME_TERNARY_RE(config.compName)
 
   const hoverProvider: HoverProvider = {
     provideHover(document, position) {
@@ -20,7 +20,7 @@ export function registerHover(context: ExtensionContext) {
         ),
       )
 
-      if (!PROP_NAME_RE.test(line))
+      if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some(reg => reg.test(line)))
         return null
 
       const word = document.getText(document.getWordRangeAtPosition(position))

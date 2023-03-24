@@ -6,7 +6,7 @@ import {
   languages,
 } from 'vscode'
 import type { CompletionItemProvider, ExtensionContext } from 'vscode'
-import { LANGUAGE_IDS, getPROP_NAME_RE } from './constant'
+import { LANGUAGE_IDS, getPROP_NAME_RE, getPROP_NAME_TERNARY_RE } from './constant'
 import { configRef } from './config'
 import { getIconMarkDown } from './markdown'
 
@@ -14,6 +14,7 @@ export function registerCompletions(context: ExtensionContext) {
   const config = configRef.value!
   // const { mapGraph, codeMap, compName } = config
   const PROP_NAME_RE = getPROP_NAME_RE(config.compName)
+  const PROP_NAME_TERNARY_RE = getPROP_NAME_TERNARY_RE(config.compName)
 
   const iconProvider: CompletionItemProvider = {
     provideCompletionItems(document, position) {
@@ -24,7 +25,7 @@ export function registerCompletions(context: ExtensionContext) {
         ),
       )
 
-      if (!PROP_NAME_RE.test(line))
+      if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some(reg => reg.test(line)))
         return null
 
       const { names } = config.mapGraph
