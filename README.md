@@ -4,6 +4,17 @@
 The preview of the iconfont icon component for VS Code.<br>
 </p>
 
+## Preview
+
+<p align="center">
+  <img src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/main.png?raw=true" alt="preview">
+</p>
+
+- map file
+
+![map-file](https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/map.png?raw=true)
+
+
 ## Config
 
 | properties | description | type | default |
@@ -11,6 +22,26 @@ The preview of the iconfont icon component for VS Code.<br>
 | mapFilePath | File describing the iconfont mapping | `string` | - |
 | svgPath | Svg file | `string` | - |
 |componentName| Component name | `string` | 'Icon' |
+
+## Commands
+```json
+[{
+  "command": "iconfont-reminder.toggle-annotations",
+  "category": "iconfont-reminder",
+  "title": "Toggle Annotations"
+},
+{
+  "command": "iconfont-reminder.reload",
+  "category": "iconfont-reminder",
+  "title": "Reload"
+},
+{
+  "command": "iconfont-reminder.toggle-inplace",
+  "category": "iconfont-reminder",
+  "title": "Toggle In-place Mode"
+}]
+```
+
 
 ### Example 
 ```json
@@ -42,13 +73,3 @@ The preview of the iconfont icon component for VS Code.<br>
           d=" ..." />
   ...
 ```
-
-## Preview
-
-<p align="center">
-  <img src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/main.png?raw=true" alt="preview">
-</p>
-
-- map file
-
-![map-file](https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/map.png?raw=true)
