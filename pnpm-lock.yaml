@@ -1,10 +1,5 @@
 lockfileVersion: '6.0'
 
-dependencies:
-  jiti:
-    specifier: ^1.18.2
-    version: 1.18.2
-
 devDependencies:
   '@ririd/eslint-config':
     specifier: ^0.4.2
@@ -48,6 +43,9 @@ devDependencies:
   glob:
     specifier: ^10.2.2
     version: 10.2.2
+  jiti:
+    specifier: ^1.18.2
+    version: 1.18.2
   mocha:
     specifier: ^10.2.0
     version: 10.2.0
@@ -2357,6 +2355,7 @@ packages:
   /jiti@1.18.2:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
+    dev: true
 
   /joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}

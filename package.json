@@ -26,7 +26,16 @@
     "vscode": "^1.57.0"
   },
   "activationEvents": [
-    "*"
+    "workspaceContains:package.json",
+    "onLanguage:vue",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:handlebars",
+    "onLanguage:svelte",
+    "onLanguage:html",
+    "onLanguage:css"
   ],
   "contributes": {
     "commands": [
