@@ -2,8 +2,8 @@
   "publisher": "ririd",
   "name": "vscode-ext-iconfont-reminder",
   "displayName": "iconfont-reminder",
-  "packageManager": "pnpm@8.3.1",
   "version": "0.2.2",
+  "packageManager": "pnpm@8.3.1",
   "description": "字体图标预览",
   "license": "MIT",
   "homepage": "https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder",
@@ -26,7 +26,16 @@
     "vscode": "^1.57.0"
   },
   "activationEvents": [
-    "onStartupFinished"
+    "workspaceContains:package.json",
+    "onLanguage:vue",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:handlebars",
+    "onLanguage:svelte",
+    "onLanguage:html",
+    "onLanguage:css"
   ],
   "contributes": {
     "commands": [
