@@ -10,7 +10,7 @@ The preview of the iconfont icon component for VS Code.<br>
   <img 
     src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/main.svg?raw=true"
     alt="preview"
-    width="800"
+    width="900"
   >
 </p>
 
@@ -20,7 +20,7 @@ The preview of the iconfont icon component for VS Code.<br>
   <img 
     src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/map.svg?raw=true"
     alt="preview"
-    width="500"
+    width="600"
   >
 </p>
 
