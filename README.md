@@ -7,13 +7,22 @@ The preview of the iconfont icon component for VS Code.<br>
 ## Preview
 
 <p align="center">
-  <img src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/main.png?raw=true" alt="preview">
+  <img 
+    src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/main.svg?raw=true"
+    alt="preview"
+    width="800"
+  >
 </p>
 
 - map file
 
-![map-file](https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/map.png?raw=true)
-
+<p align="center">
+  <img 
+    src="https://github.com/Daydreamer-riri/vscode-ext-iconfont-reminder/blob/main/screenshots/map.svg?raw=true"
+    alt="preview"
+    width="500"
+  >
+</p>
 
 ## Config
 
