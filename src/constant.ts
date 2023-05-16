@@ -6,7 +6,7 @@ export const getPROP_NAME_TERNARY_RE = (compName: string) =>
     `<${compName}[\\s\\n\\t][\\s\\S^>]*?name={[\\s\\S^'^"^}]*?\\?[\\s\\n\\t]*['"][\\w-]*$`,
     ),
     new RegExp(
-    `<${compName}[\\s\\n\\t][\\s\\S^>]*?name={[\\s\\S^'^"^}]*?\\?[\\s\\n\\t]*['"][\\w-]*?['"][\\s\\n\\t]*:[\\s\\n\\t]*['"][\\w-]*$`,
+    `<${compName}[\\s\\n\\t][\\s\\S^>]*?name={[\\s\\S^'^"^}]*?\\?[\\s\\n\\t]*(['"])[\\w-]*?\\1[\\s\\n\\t]*:[\\s\\n\\t]*['"][\\w-]*$`,
     ),
   ]
 export const LANGUAGE_IDS = [

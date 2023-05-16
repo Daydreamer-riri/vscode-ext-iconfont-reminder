@@ -15,7 +15,7 @@ export function registerHover(context: ExtensionContext) {
 
       const line = document.getText(
         new Range(
-          new Position(position.line - 5, 0),
+          new Position(Math.max(0, position.line - 5), 0),
           new Position(position.line, position.character),
         ),
       )

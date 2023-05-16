@@ -1,7 +1,8 @@
 import type { DecorationOptions, ExtensionContext, TextEditor } from 'vscode'
-import { DecorationRangeBehavior, Range, Uri, window, workspace } from 'vscode'
+import { DecorationRangeBehavior, Position, Range, Uri, window, workspace } from 'vscode'
 
 import { configRef, getNAME_RE } from './config'
+import { getPROP_NAME_RE, getPROP_NAME_TERNARY_RE } from './constant'
 import { getIconMarkDown } from './markdown'
 import { getSvgColor, isTruthy } from './utils'
 
@@ -11,6 +12,8 @@ export interface DecorationMatch extends DecorationOptions {
 
 export function registerAnnotations(context: ExtensionContext) {
   const config = configRef.value!
+  const PROP_NAME_RE = getPROP_NAME_RE(config.compName)
+  const PROP_NAME_TERNARY_RE = getPROP_NAME_TERNARY_RE(config.compName)
 
   const InlineIconDecoration = window.createTextEditorDecorationType({
     textDecoration: 'none; opacity: 0.6 !important;',
@@ -47,6 +50,15 @@ export function registerAnnotations(context: ExtensionContext) {
 
       const startPos = editor.document.positionAt(match.index + 1)
       const endPos = editor.document.positionAt(match.index + key.length + 1)
+
+      const line = editor.document.getText(
+        new Range(
+          new Position(Math.max(0, startPos.line - 5), 0),
+          endPos,
+        ),
+      )
+      if (!PROP_NAME_RE.test(line) && !PROP_NAME_TERNARY_RE.some(reg => reg.test(line)))
+        continue
       keys.push([new Range(startPos, endPos), key])
     }
 
