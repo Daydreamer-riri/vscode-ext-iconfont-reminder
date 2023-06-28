@@ -96,7 +96,7 @@
     "build": "esno scripts/build.ts"
   },
   "devDependencies": {
-    "@ririd/eslint-config": "^0.4.2",
+    "@ririd/eslint-config": "^0.5.1",
     "@types/fs-extra": "^11.0.1",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
@@ -112,7 +112,7 @@
     "glob": "^10.2.2",
     "jiti": "^1.18.2",
     "mocha": "^10.2.0",
-    "tsup": "^6.7.0",
+    "tsup": "^7.1.0",
     "typescript": "^5.0.4"
   }
 }
