@@ -132,5 +132,5 @@ async function createMapGraph(mapFile: string) {
 
 export function getNAME_RE() {
   const names = configRef.value?.mapGraph.names ?? []
-  return new RegExp(`[^\\w\\d]((?:${names.join('|')}))`, 'g')
+  return new RegExp(`[^\\w\\d](['"\`])((?:${names.join('|')}))\\1`, 'g')
 }

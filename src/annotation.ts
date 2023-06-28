@@ -44,12 +44,12 @@ export function registerAnnotations(context: ExtensionContext) {
     const keys: [Range, string][] = []
 
     while ((match = regex.exec(text))) {
-      const key = match[1]
+      const key = match[2]
       if (!key)
         continue
 
-      const startPos = editor.document.positionAt(match.index + 1)
-      const endPos = editor.document.positionAt(match.index + key.length + 1)
+      const startPos = editor.document.positionAt(match.index + 2)
+      const endPos = editor.document.positionAt(match.index + 1 + key.length + 1)
 
       const line = editor.document.getText(
         new Range(
